@@ -22,7 +22,7 @@ function Add-Stuff {
         return
     }
 
-    $target = $zero_vars | Get-Random # 랜덤하게 하나 뽑아서 2나 4로 만드는코드
+    $target = $zero_vars | Get-Random # 0인것들 중 랜덤하게 하나 뽑아서 2나 4로 만드는 코드
     $ran_num = Get-Random -Minimum 0.0 -Maximum 1.0
     if ($ran_num -ge 0.9) {
         $target.Value = 4
@@ -33,6 +33,7 @@ function Add-Stuff {
 }
 
 function Move-Up {
+    # Move-**** 함수들은 모두 각 이동키마다의 동작 정의 (위/아래/왼/오)
     param ([ref]$score)
 
     for ($i = 1; $i -le 4; $i++) {

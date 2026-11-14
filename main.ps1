@@ -11,6 +11,7 @@ function Quit {
 }
 
 function Game {
+    # 게임 메인 로직 설정
     :GameLoop while ($true) {
         Numbers
         Add-Stuff
@@ -29,6 +30,7 @@ function Game {
 }
 
 function Main {
+    # 프로그램 기본 로직 (게임 로직과는 별개)
     while ($true) {
         $ans = (Read-Host -Prompt "Power2048을 시작합니다. 1: 게임 플레이. 2: 통계 출력. Q. 게임 종료.").ToUpper()
         switch ($ans) {

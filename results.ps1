@@ -13,11 +13,11 @@ function Decode {
 
     $cipher = [bigint]::Parse($message)
     return [long]([bigint]::ModPow($cipher, $d, $n))
-}
+} # RSA 복호화
 
-$results = Get-Content -Path ".\results.txt" -Raw
+$results = Get-Content -Path ".\results.txt" -Raw 
 
-$arr = $results -split "\s+" | Where-Object { $_ -ne "" }  
+$arr = $results -split "\s+" | Where-Object { $_ -ne "" }  # 위 두 줄의 코드는 results.txt 받아들이고 복호화
 
 $main_list = $arr | ForEach-Object { Decode -message $_ -n $n -d $d }
 if ($main_list.Count -eq 0) {
@@ -27,4 +27,4 @@ if ($main_list.Count -eq 0) {
 else {
     $max_value = ($main_list | Measure-Object -Maximum).Maximum
     $avv = ($main_list | Measure-Object -Sum).Sum / $main_list.Count
-}
+} # 평균이랑 최댓값 구하는 로직
