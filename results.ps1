@@ -22,7 +22,9 @@ $arr = $results -split "\s+" | Where-Object { $_ -ne "" }
 $main_list = $arr | ForEach-Object { Decode -message $_ -n $n -d $d }
 if ($main_list.Count -eq 0) {
     $max_value = 0
+    $avv = 0
 }
 else {
     $max_value = ($main_list | Measure-Object -Maximum).Maximum
+    $avv = ($main_list | Measure-Object -Sum).Sum / $main_list.Count
 }
