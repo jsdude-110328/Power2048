@@ -34,6 +34,7 @@ function Main {
         switch ($ans) {
             ($ans -eq "1") { Game }
             ($ans -eq "2") { Write-Host "Hello" }
+            default { Write-Host "오류입니다." }
         }
     }
 }
