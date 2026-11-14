@@ -2,7 +2,7 @@
 
 ## 1. 이건 무슨 게임인가요?
 
-2014년 이탈리아의 한 개발자가 만든 게임 2048을 PowerShell 기반으로 제작해 콘솔에서 즐길 수 있도록 한 게임입니다. 2048의 공식 깃헙 링크는 https://github.com/gabrielecirulli/2048 입니다.
+2014년 이탈리아의 한 개발자가 만든 게임 2048을 약간의 게임적 변경을 거친 후 PowerShell 기반으로 제작해 콘솔에서 즐길 수 있도록 한 게임입니다. 2048의 공식 깃헙 링크는 https://github.com/gabrielecirulli/2048 입니다.
 
 ## 2. 그래서 왜 PowerShell인가요?
 
