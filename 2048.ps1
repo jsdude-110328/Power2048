@@ -32,11 +32,65 @@ function Add-Number {
     }
 }
 
-function Play-W {
+function Move-Up {
     for ($i = 1; $i -le 4; $i++) {
-        for ($j = i; $j -ge 3; $j++) {
+        for ($j = 1; $j -le 3; $j++) {
             $foow = Get-Variable -Name "x$($i)_y$($j)" -Scope Script
-            $barw = Get-Variable -Name "x$($i)_y{$($j + 1)}" -Scope Script
+            $barw = Get-Variable -Name "x$($i)_y$($j + 1)" -Scope Script
+
+            if ($barw.Value -eq $foow.Value -and $foow.Value -ne 0) {
+                $barw.Value = $foow.Value * 2
+                $foow.Value = 0
+            }
+            elseif ($barw.Value -eq 0 -and $foow.Value -ne 0) {
+                $barw.Value = $foow.Value
+                $foow.Value = 0
+            }
+        }
+    }
+}
+
+function Move-Down {
+    for ($i = 1; $i -le 4; $i++) {
+        for ($j = 4; $j -ge 2; $j--) {
+            $foow = Get-Variable -Name "x$($i)_y$($j)" -Scope Script
+            $barw = Get-Variable -Name "x$($i)_y$($j - 1)" -Scope Script
+
+            if ($barw.Value -eq $foow.Value -and $foow.Value -ne 0) {
+                $barw.Value = $foow.Value * 2
+                $foow.Value = 0
+            }
+            elseif ($barw.Value -eq 0 -and $foow.Value -ne 0) {
+                $barw.Value = $foow.Value
+                $foow.Value = 0
+            }
+        }
+    }
+}
+
+function Move-Right {
+    for ($j = 1; $j -le 4; $j++) {
+        for ($i = 1; $i -le 3; $i++) {
+            $foow = Get-Variable -Name "x$($i)_y$($j)" -Scope Script
+            $barw = Get-Variable -Name "x$($i + 1)_y$($j)" -Scope Script
+
+            if ($barw.Value -eq $foow.Value -and $foow.Value -ne 0) {
+                $barw.Value = $foow.Value * 2
+                $foow.Value = 0
+            }
+            elseif ($barw.Value -eq 0 -and $foow.Value -ne 0) {
+                $barw.Value = $foow.Value
+                $foow.Value = 0
+            }
+        }
+    }
+}
+
+function Move-Left {
+    for ($j = 1; $j -le 4; $j++) {
+        for ($i = 4; $i -ge 2; $i--) {
+            $foow = Get-Variable -Name "x$($i)_y$($j)" -Scope Script
+            $barw = Get-Variable -Name "x$($i - 1)_y$($j)" -Scope Script
 
             if ($barw.Value -eq $foow.Value -and $foow.Value -ne 0) {
                 $barw.Value = $foow.Value * 2
@@ -51,14 +105,13 @@ function Play-W {
 }
 
 function Play-Game {
-
-    Write-Host "명령을 입력하세요: W/A/S/D. "
-    $ans = Read-Host
+    $ans = (Read-Host -Prompt "명령을 입력하세요: W/A/S/D. Q로 게임을 종료합니다.").ToUpper()
     switch ($ans) {
-        "W" { Write-Host "W" }
-        "A" { Write-Host "A" }
-        "S" { Write-Host "S" }
-        "D" { Write-Host "D" }
+        "W" { Move-Up }
+        "A" { Move-Left }
+        "S" { Move-Down }
+        "D" { Move-Right }
+        "Q" { return }
         default { Write-Host "오류입니다." }
     }
 }
