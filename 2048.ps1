@@ -22,7 +22,7 @@ function Add-Stuff {
         return
     }
 
-    $target = $zero_vars | Get-Random
+    $target = $zero_vars | Get-Random # 랜덤하게 하나 뽑아서 2나 4로 만드는코드
     $ran_num = Get-Random -Minimum 0.0 -Maximum 1.0
     if ($ran_num -ge 0.9) {
         $target.Value = 4
