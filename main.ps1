@@ -3,11 +3,11 @@
 
 function Quit {
     $smaller = $score -le 100000
-    $encoded = switch ($bigger) {
+    $encoded = switch ($smaller) {
         ($smaller -eq $true) { Encode -message $score -n $n -e $e }
         default { Encode -message 100000 -n $n -e $e }
     } # 점수 최대치 설정 (100000)
-    Add-Content -Path "./results.txt" -Value "`r`n$($encoded)"; Write-Host "게임을 종료합니다."; break :GameLoop
+    Add-Content -Path "./results.txt" -Value "`r`n$($encoded)"; Write-Host "게임을 종료합니다."
 }
 
 function Game {
@@ -22,7 +22,7 @@ function Game {
             "A" { Move-Left -score ([ref]$score) }
             "S" { Move-Down -score ([ref]$score) }
             "D" { Move-Right -score ([ref]$score) }
-            "Q" { Quit }
+            "Q" { Quit; break GameLoop }
             default { Write-Host "오류입니다." }
         }
     }
@@ -30,10 +30,11 @@ function Game {
 
 function Main {
     while ($true) {
-        $ans = Read-Host -Prompt "Power2048을 시작합니다. 1: 게임 플레이. 2: 통계 출력."
+        $ans = (Read-Host -Prompt "Power2048을 시작합니다. 1: 게임 플레이. 2: 통계 출력. Q. 게임 종료.").ToUpper()
         switch ($ans) {
-            ($ans -eq "1") { Game }
-            ($ans -eq "2") { Write-Host "Hello" }
+            "1" { Game }
+            "2" { Write-Host "전체 플레이 횟수: $($main_list.Count)회. 점수 평균: $($avv)점." }
+            "Q" { Write-Host "프로그램을 종료합니다."; exit }
             default { Write-Host "오류입니다." }
         }
     }
