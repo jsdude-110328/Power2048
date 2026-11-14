@@ -9,14 +9,14 @@ for ($x = 1; $x -le 4; $x++) {
     }
 } # 각 좌표별 변수 생성
 
-function Print-Game {
-    Write-Host "|$($x1_y4)|$($x2_y4)|$($x3_y4)|$($x4_y4)"
-    Write-Host "|$($x1_y3)|$($x2_y3)|$($x3_y3)|$($x4_y3)"
-    Write-Host "|$($x1_y2)|$($x2_y2)|$($x3_y2)|$($x4_y2)"
-    Write-Host "|$($x1_y1)|$($x2_y1)|$($x3_y1)|$($x4_y1)"
+function Numbers {
+    Write-Host "|$($x1_y4)|$($x2_y4)|$($x3_y4)|$($x4_y4)|"
+    Write-Host "|$($x1_y3)|$($x2_y3)|$($x3_y3)|$($x4_y3)|"
+    Write-Host "|$($x1_y2)|$($x2_y2)|$($x3_y2)|$($x4_y2)|"
+    Write-Host "|$($x1_y1)|$($x2_y1)|$($x3_y1)|$($x4_y1)|"
 }
 
-function Add-Number {
+function Add-Stuff {
     $zero_vars = @(Get-Variable -Name "x*_y*" -Scope Script | Where-Object { $_.Value -eq 0 } )
     if ($zero_vars.Count -eq 0) {
         return
@@ -33,6 +33,8 @@ function Add-Number {
 }
 
 function Move-Up {
+    param ([ref]$score)
+
     for ($i = 1; $i -le 4; $i++) {
         for ($j = 1; $j -le 3; $j++) {
             $foow = Get-Variable -Name "x$($i)_y$($j)" -Scope Script
@@ -40,6 +42,7 @@ function Move-Up {
 
             if ($barw.Value -eq $foow.Value -and $foow.Value -ne 0) {
                 $barw.Value = $foow.Value * 2
+                $score.Value += $barw.Value
                 $foow.Value = 0
             }
             elseif ($barw.Value -eq 0 -and $foow.Value -ne 0) {
@@ -51,6 +54,8 @@ function Move-Up {
 }
 
 function Move-Down {
+    param ([ref]$score)
+
     for ($i = 1; $i -le 4; $i++) {
         for ($j = 4; $j -ge 2; $j--) {
             $foow = Get-Variable -Name "x$($i)_y$($j)" -Scope Script
@@ -58,6 +63,7 @@ function Move-Down {
 
             if ($barw.Value -eq $foow.Value -and $foow.Value -ne 0) {
                 $barw.Value = $foow.Value * 2
+                $score.Value += $barw.Value
                 $foow.Value = 0
             }
             elseif ($barw.Value -eq 0 -and $foow.Value -ne 0) {
@@ -69,6 +75,8 @@ function Move-Down {
 }
 
 function Move-Right {
+    param ([ref]$score)
+
     for ($j = 1; $j -le 4; $j++) {
         for ($i = 1; $i -le 3; $i++) {
             $foow = Get-Variable -Name "x$($i)_y$($j)" -Scope Script
@@ -76,6 +84,7 @@ function Move-Right {
 
             if ($barw.Value -eq $foow.Value -and $foow.Value -ne 0) {
                 $barw.Value = $foow.Value * 2
+                $score.Value += $barw.Value
                 $foow.Value = 0
             }
             elseif ($barw.Value -eq 0 -and $foow.Value -ne 0) {
@@ -87,6 +96,8 @@ function Move-Right {
 }
 
 function Move-Left {
+    param ([ref]$score)
+
     for ($j = 1; $j -le 4; $j++) {
         for ($i = 4; $i -ge 2; $i--) {
             $foow = Get-Variable -Name "x$($i)_y$($j)" -Scope Script
@@ -94,6 +105,7 @@ function Move-Left {
 
             if ($barw.Value -eq $foow.Value -and $foow.Value -ne 0) {
                 $barw.Value = $foow.Value * 2
+                $score.Value += $barw.Value
                 $foow.Value = 0
             }
             elseif ($barw.Value -eq 0 -and $foow.Value -ne 0) {
@@ -101,17 +113,5 @@ function Move-Left {
                 $foow.Value = 0
             }
         }
-    }
-}
-
-function Play-Game {
-    $ans = (Read-Host -Prompt "명령을 입력하세요: W/A/S/D. Q로 게임을 종료합니다.").ToUpper()
-    switch ($ans) {
-        "W" { Move-Up }
-        "A" { Move-Left }
-        "S" { Move-Down }
-        "D" { Move-Right }
-        "Q" { return }
-        default { Write-Host "오류입니다." }
     }
 }
